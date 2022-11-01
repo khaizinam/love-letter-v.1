@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <title>Gửi Nương Tử</title>
+</head>
+
+<body>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Raleway', sans-serif;
+        }
+        
+        body {
+            background: #6b92b9;
+        }
+        
+        canvas {
+            display: block;
+        }
+        
+        #loveQuestion {
+            position: absolute;
+            left: 150px;
+            top: 200px;
+            font-size: 70px;
+        }
+        
+        #goodBye {
+            font-size: 35px;
+        }
+        
+        input {
+            font-size: 30px;
+            border: 2px solid pink;
+            border-radius: 30px;
+            color: white;
+            padding: 16px 32px;
+            text-align: center;
+        }
+        
+        input:hover {
+            border: 2px solid red;
+        }
+        
+        input#btnClose {
+            width: 375px;
+        }
+        
+        #btnYes {
+            position: absolute;
+            left: 280px;
+            bottom: 80px;
+            width: 280px;
+            background-color: #7bd806;
+            cursor: pointer;
+        }
+        
+        #btnNo {
+            position: absolute;
+            left: 660px;
+            bottom: 80px;
+            width: 280px;
+            background-color: #f4511e;
+            transition: 0.3s;
+        }
+        
+        #btnReset {
+            position: absolute;
+            left: 360px;
+            top: 450px;
+            width: 400px;
+            background-color: #f4511e;
+            display: none;
+        }
+        
+        #btnClose {
+            position: absolute;
+            display: inline-block;
+            left: 140px;
+            bottom: 25px;
+            background-color: #7bd806;
+            cursor: pointer;
+        }
+        
+        #btnClose:hover,
+        #btnYes:hover {
+            background-color: #f77d58;
+        }
+        
+        #btnReset:hover {
+            background-color: red;
+        }
+        
+        #pop-up {
+            position: absolute;
+            padding: 25px;
+            left: 220px;
+            top: 100px;
+            display: none;
+            width: 600px;
+            height: 400px;
+            background-color: white;
+        }
+    </style>
+    <canvas id="canvas"></canvas>
+    <h1 id="loveQuestion">Muốn làm Nương Tử của ta không 🙄?</h1>
+    <input type="button" id="btnYes" value="TA ĐỒNG Ý 🥰" onclick="yesClick()" />
+    <input type="button" id="btnReset" value="TA MUỐN CHỌN LẠI 😑" onclick="resetClick()" />
+    <input type="button" id="btnNo" value="MƠ ĐI CƯNG 😑" onmouseover="noHover()" onclick="noHover()" />
+    <div id="pop-up">
+        <h1 id="goodBye"> Chúc Nương Tử buổi tối tốt lành 🥰!</h1>
+        <h1 style="text-align: center;color:red;font-size:100px">❤❤</h1>
+        <input type="button" id="btnClose" value="OK lão công 🤣!" onclick="closeClick()" />
+    </div>
+    <script>
+        getEle = e => document.getElementById(e);
+
+        inHtml = (e, mes) => {
+            getEle(e).innerHTML = mes;
+        };
+
+        display = e => getEle(e).style.display = "block";
+
+        hide = e => getEle(e).style.display = "none";
+
+        function position(e, x, y) {
+            getEle(e).style.left = `${x}px`;
+            getEle(e).style.top = `${y}px`;
+        }
+
+        function popUp() {
+            position("pop-up", Math.floor(window.innerWidth - 600) / 2, Math.floor(window.innerHeight - 400) / 2);
+        }
+
+        const leftStart = (window.innerWidth - 640) / 2;
+
+        getEle("btnNo").style.left = `${leftStart + 360}px`;
+        getEle("btnYes").style.left = `${leftStart}px`;
+
+        const date = new Date();
+
+        updateMess = () => {
+            var mes;
+            if (date.getHours() >= 0 && date.getHours() < 10)
+                mes = "Chúc Nương Tử buổi sáng vui vẻ 🥰!";
+            else if (date.getHours() >= 10 && date.getHours() < 14)
+                mes = "Chúc Nương Tử ăn trưa ngon miệng 🥰!";
+            else if (date.getHours() >= 14 && date.getHours() < 17)
+                mes = "Chúc Nương Tử buổi chiều vui vẻ 🥰!";
+            else mes = "Chúc Nương Tử buổi tối tốt lành 🥰!";
+            inHtml("goodBye", mes);
+        }
+
+        Window.resize = function() {
+            popUp();
+        }
+
+        window.onload = function() {
+            popUp();
+            updateMess();
+            //canvas init
+            const canvas = getEle("canvas");
+            const ctx = canvas.getContext("2d");
+
+            //canvas dimensions
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+
+            //snowflake particles
+            var mp = 25; //max particles
+            var particles = [];
+            for (var i = 0; i < mp; i++) {
+                particles.push({
+                    x: Math.random() * W, //x-coordinate
+                    y: Math.random() * H, //y-coordinate
+                    r: Math.random() * 4 + 1, //radius
+                    d: Math.random() * mp, //density
+                });
+            }
+
+            //Lets draw the flakes
+            function draw() {
+                ctx.clearRect(0, 0, W, H);
+
+                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                ctx.beginPath();
+                for (var i = 0; i < mp; i++) {
+                    var p = particles[i];
+                    ctx.moveTo(p.x, p.y);
+                    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+                }
+                ctx.fill();
+                update();
+            }
+
+            //Function to move the snowflakes
+            //angle will be an ongoing incremental flag. Sin and Cos functions will be applied to it to create vertical and horizontal movements of the flakes
+            var angle = 0;
+
+            function update() {
+                angle += 0.01;
+                for (var i = 0; i < mp; i++) {
+                    var p = particles[i];
+                    //Updating X and Y coordinates
+                    //We will add 1 to the cos function to prevent negative values which will lead flakes to move upwards
+                    //Every particle has its own density which can be used to make the downward movement different for each flake
+                    //Lets make it more random by adding in the radius
+                    p.y += Math.cos(angle + p.d) + 1 + p.r / 2;
+                    p.x += Math.sin(angle) * 2;
+
+                    //Sending flakes back from the top when it exits
+                    //Lets make it a bit more organic and let flakes enter from the left and right also.
+                    if (p.x > W + 5 || p.x < -5 || p.y > H) {
+                        if (i % 3 > 0) {
+                            //66.67% of the flakes
+                            particles[i] = {
+                                x: Math.random() * W,
+                                y: -10,
+                                r: p.r,
+                                d: p.d
+                            };
+                        } else {
+                            //If the flake is exitting from the right
+                            if (Math.sin(angle) > 0) {
+                                //Enter from the left
+                                particles[i] = {
+                                    x: -5,
+                                    y: Math.random() * H,
+                                    r: p.r,
+                                    d: p.d
+                                };
+                            } else {
+                                //Enter from the right
+                                particles[i] = {
+                                    x: W + 5,
+                                    y: Math.random() * H,
+                                    r: p.r,
+                                    d: p.d
+                                };
+                            }
+                        }
+                    }
+                }
+            }
+
+            //animation loop
+            setInterval(draw, 33);
+        };
+        value = (e, mes) => {
+            getEle(e).value = mes;
+        }
+
+        function yesClick() {
+            hide("btnNo");
+            hide("btnYes");
+            display("btnReset");
+            display("pop-up");
+            inHtml("loveQuestion", "Đã bấm thì chấp nhận nhé ta rồi 😏, ôi hạnh phúc quá 🥰!");
+            value("btnYes", "OK 🤣!");
+            value("btnNo", "MÉO 😫");
+        }
+
+        function closeClick() {
+            hide("pop-up");
+        }
+
+        function resetClick() {
+            display("btnYes");
+            display("btnNo");
+            hide("btnReset");
+            getEle("btnNo").style.left = `${leftStart + 360}px`;
+            getEle("btnNo").style.bottom = `80px`;
+            inHtml("loveQuestion", "Hỏi lại, muốn làm Nương Tử của ta không 🙄?");
+        }
+
+        function noHover() {
+            var x = Math.floor(Math.random() * window.innerWidth);
+            var y = Math.floor(Math.random() * window.innerHeight);
+            if (x > window.innerWidth - 300) x = window.innerWidth - 300;
+            if (y > window.innerHeight - 100) y = window.innerHeight - 100;
+            getEle("btnNo").style.left = `${x}px`;
+            getEle("btnNo").style.bottom = `${y}px`;
+        }
+    </script>
+</body>
+
+</html>

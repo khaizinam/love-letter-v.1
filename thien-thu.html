@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <title>Gửi Nương Tử</title>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <h1 id="loveQuestion">Muốn làm Nương Tử của ta không 🙄?</h1>
+    <input type="button" id="btnYes" value="TA ĐỒNG Ý 🥰" onclick="yesClick()" />
+    <input type="button" id="btnReset" value="TA MUỐN CHỌN LẠI 😑" onclick="resetClick()" />
+    <input type="button" id="btnNo" value="MƠ ĐI CƯNG 😑" onmouseover="noHover()" onclick="noHover()" />
+    <div id="pop-up">
+        <h1 id="goodBye"> Chúc Nương Tử buổi tối tốt lành 🥰!</h1>
+        <h1 style="text-align: center;color:red;font-size:100px">❤❤</h1>
+        <input type="button" id="btnClose" value="OK lão công 🤣!" onclick="closeClick()" />
+    </div>
+    <script src="main.js"></script>
+    <script src="snowflake.js"></script>
+</body>
+
+</html>

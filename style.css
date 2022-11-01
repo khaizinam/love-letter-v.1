@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@500&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    background: #6b92b9;
+}
+
+canvas {
+    display: block;
+}
+
+#loveQuestion {
+    position: absolute;
+    left: 150px;
+    top: 200px;
+    font-size: 70px;
+}
+
+#goodBye {
+    font-size: 35px;
+}
+
+input {
+    font-size: 30px;
+    border: 2px solid pink;
+    border-radius: 30px;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+}
+
+input:hover {
+    border: 2px solid red;
+}
+
+input#btnClose {
+    width: 375px;
+}
+
+#btnYes {
+    position: absolute;
+    left: 280px;
+    bottom: 80px;
+    width: 280px;
+    background-color: #7bd806;
+    cursor: pointer;
+}
+
+#btnNo {
+    position: absolute;
+    left: 660px;
+    bottom: 80px;
+    width: 280px;
+    background-color: #f4511e;
+    transition: 0.3s;
+}
+
+#btnReset {
+    position: absolute;
+    left: 360px;
+    top: 450px;
+    width: 400px;
+    background-color: #f4511e;
+    display: none;
+}
+
+#btnClose {
+    position: absolute;
+    display: inline-block;
+    left: 140px;
+    bottom: 25px;
+    background-color: #7bd806;
+    cursor: pointer;
+}
+
+#btnClose:hover,
+#btnYes:hover {
+    background-color: #f77d58;
+}
+
+#btnReset:hover {
+    background-color: red;
+}
+
+#pop-up {
+    position: absolute;
+    padding: 25px;
+    left: 220px;
+    top: 100px;
+    display: none;
+    width: 600px;
+    height: 400px;
+    background-color: white;
+}
