@@ -51,7 +51,7 @@ function yesClick() {
     hide("btnYes");
     display("btnReset");
     display("pop-up");
-    inHtml("loveQuestion", "Đã bấm thì chấp nhận nhé ta rồi 😏, ôi hạnh phúc quá 🥰!");
+    inHtml("loveQuestion", "Đã bấm thì chấp nhận làm Nương Tử ta rồi 😏, ôi hạnh phúc quá 🥰!");
     value("btnYes", "OK 🤣!");
     value("btnNo", "MÉO 😫");
 }
